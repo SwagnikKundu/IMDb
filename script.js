@@ -1,9 +1,10 @@
 // DOM constants
 const searchInput = document.querySelector('#search-input');
-const typeSelect = document.querySelector('.search-filter'); 
+const typeSelect = document.querySelector('.search-filter');
 const recentSection = document.querySelector('#recently-viewed');
 const wishlistSection = document.querySelector('#my-wishlist');
 
+// API key and maximum items to display
 const apiKey = 'cf7331ea';
 const maxItems = 10;
 
@@ -38,20 +39,19 @@ function displaySearchResults(data) {
 
     if (data && data.Response === 'True') {
         data.Search.forEach(item => {
+            // Create elements for each search result
             const listItem = document.createElement('div');
             listItem.classList.add('list-item');
 
+            // Populate the elements with data from the search result
             const listItemContent = document.createElement('div');
             listItemContent.classList.add('list-item-content');
 
+            // Create thumbnail
             const thumbnail = document.createElement('div');
             thumbnail.classList.add('item-thumbnail');
             const thumbnailImg = document.createElement('img');
-            if (item.Poster !== "N/A") {
-                thumbnailImg.src = item.Poster;
-            } else {
-                thumbnailImg.src = "images/img-not-found.jpg";
-            }
+            thumbnailImg.src = item.Poster !== "N/A" ? item.Poster : "images/img-not-found.jpg";
             thumbnail.appendChild(thumbnailImg);
 
             const info = document.createElement('div');
@@ -61,7 +61,7 @@ function displaySearchResults(data) {
             const year = document.createElement('p');
             year.textContent = item.Year;
             const tagIcon = document.createElement('i');
-            tagIcon.classList.add('fas','p-2', item.Type === 'movie' ? 'fa-film' : 'fa-tv');
+            tagIcon.classList.add('fas', 'p-2', item.Type === 'movie' ? 'fa-film' : 'fa-tv');
             const tagText = document.createElement('span');
             tagText.textContent = item.Type === 'movie' ? 'Movie' : 'Series';
             const tagContainer = document.createElement('div');
@@ -76,21 +76,16 @@ function displaySearchResults(data) {
             // Create an icon for adding to favorites
             const addToFavoritesIcon = document.createElement('i');
             addToFavoritesIcon.classList.add('fa-regular', 'fa-heart', 'wishlist-icon');
-            addToFavoritesIcon.addEventListener('click', function(event) {
+            addToFavoritesIcon.addEventListener('click', function (event) {
                 event.stopPropagation(); // Prevent event from bubbling up to the parent elements
                 handleWishlistClick(item);
             });
 
-            
-            listItem.addEventListener('click', function(event) { 
+            listItem.addEventListener('click', function (event) {
                 handleThumbnailClick(item);
                 closeSearchList();
-                redirectToDestinationPage(item);
-                
-                
             });
 
-            // Append elements
             listItemContent.appendChild(thumbnail);
             listItemContent.appendChild(info);
 
@@ -106,19 +101,17 @@ function displaySearchResults(data) {
     }
 }
 
-
-
 // Function to add item to wishlist
 async function addToWishlist(item) {
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     const existingIndex = wishlist.findIndex((wishlistItem) => wishlistItem.imdbID === item.imdbID);
-    if (existingIndex === -1) {
-        wishlist.splice(itemIndex, 1);
+    if (existingIndex !== -1) {
+        wishlist.splice(existingIndex, 1);
     }
     const movieDetails = await fetchMovieDetails(item.imdbID);
-        wishlist.push({ ...item,details: movieDetails});
-        wishlist = wishlist.slice(0, maxItems);
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    wishlist.push({ ...item, details: movieDetails });
+    wishlist = wishlist.slice(0, maxItems);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
 }
 
 // Function to handle click on wishlist icon
@@ -130,14 +123,10 @@ async function handleWishlistClick(item) {
     }
     const movieDetails = await fetchMovieDetails(item.imdbID);
     wishList.push({ ...item, details: movieDetails });
-    
     wishList = wishList.slice(0, maxItems);
     localStorage.setItem('wishlist', JSON.stringify(wishList));
     renderMyWishlist();
 }
-
-
-
 
 async function fetchMovieDetails(imdbID) {
     const url = `https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`;
@@ -154,27 +143,25 @@ async function addToRecentlyViewed(item) {
     }
     const movieDetails = await fetchMovieDetails(item.imdbID);
     recentlyViewedList.unshift({ ...item, details: movieDetails });
-    
-    recentlyViewedList = recentlyViewedList.slice(0, 2*maxItems);
+    recentlyViewedList = recentlyViewedList.slice(0, maxItems);
     localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewedList));
 }
 
-// localStorage.clear();
-
-
 // Function to handle click on thumbnail
-function handleThumbnailClick(item) {
-    addToRecentlyViewed(item);
+async function handleThumbnailClick(item) {
+    await addToRecentlyViewed(item); // Wait until addToRecentlyViewed completes
     renderRecentViewed();
+    redirectToDestinationPage(item);
 }
 
-// Event listener for the input field
+// Event listener for the input field and type select
 searchInput.addEventListener('input', search);
 typeSelect.addEventListener('change', search);
 
+// Function to perform search
 function search() {
     const searchTerm = searchInput.value.trim();
-    const selectedType = typeSelect.value; 
+    const selectedType = typeSelect.value;
     if (searchTerm.length === 0) {
         clearSearchList();
         return;
@@ -196,13 +183,14 @@ function search() {
 function closeSearchList() {
     const searchList = document.getElementById('search-list');
     clearSearchList();
-    searchInput.value = ''; 
+    searchInput.value = '';
 }
 
+// Event listener to close search list when clicking outside
 document.body.addEventListener('click', closeSearchList);
 
-function createElementsFromArray(array, parentElement,headingText) {
-    
+// Function to render elements from an array
+function createElementsFromArray(array, parentElement, headingText) {
     while (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
     }
@@ -213,7 +201,6 @@ function createElementsFromArray(array, parentElement,headingText) {
 
     const mainDiv = document.createElement('div');
     mainDiv.className = 'main';
-    
 
     array.forEach(item => {
         const div = document.createElement('div');
@@ -222,25 +209,17 @@ function createElementsFromArray(array, parentElement,headingText) {
         const title = document.createElement('h3');
         const rating = document.createElement('span');
         const plot = document.createElement('div');
-        const deleteDiv = document.createElement('div');
         div.className = 'object';
         img.className = 'object-image';
         infoDiv.className = 'object-info';
         rating.className = 'rating';
-        if (item.Poster !== "N/A") {
-            img.src = item.Poster;
-        } else {
-            img.src = "images/img-not-found.jpg";
-        }
+        img.src = item.Poster !== "N/A" ? item.Poster : "images/img-not-found.jpg";
         title.textContent = item.Title;
 
-
-        
-
         infoDiv.appendChild(title);
-        if(item.details.imdbRating!=='N/A'){
+        if (item.details && item.details.imdbRating !== 'N/A') {
             rating.textContent = item.details['imdbRating'];
-            if(item.details['imdbRating']>=6){
+            if (item.details['imdbRating'] >= 6) {
                 rating.classList.add('green');
             } else {
                 rating.classList.add('red');
@@ -249,52 +228,49 @@ function createElementsFromArray(array, parentElement,headingText) {
         }
         div.appendChild(img);
         div.appendChild(infoDiv);
-        if(item.details.Plot!=='N/A'){
+        if (item.details && item.details.Plot !== 'N/A') {
             plot.textContent = item.details['Plot'];
             plot.classList.add('plot');
             div.appendChild(plot);
         }
 
-        div.addEventListener('click', function() {
+        div.addEventListener('click', function () {
             redirectToDestinationPage(item);
         });
 
-        
         mainDiv.appendChild(div);
     });
 
     parentElement.appendChild(mainDiv);
 }
 
-function renderRecentViewed(){
+// Function to render recently viewed section
+function renderRecentViewed() {
     let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-    console.log(recentlyViewed);
-    if(recentlyViewed[0])
-        createElementsFromArray(recentlyViewed,recentSection,'Recently Viewed >');
+    if (recentlyViewed[0]) // Check if there are items in the array
+        createElementsFromArray(recentlyViewed, recentSection, 'Recently Viewed >');
 }
-
 
 // Function to redirect to a details page in a new tab
 function redirectToDestinationPage(item) {
-    window.location.href = 'details-page.html';
+    window.location.href = `details-page.html?id=${item.imdbID}`;
 }
 
-function renderMyWishlist(){
+// Function to render wishlist section
+function renderMyWishlist() {
     let wishlisted = JSON.parse(localStorage.getItem('wishlist')) || [];
-    console.log(wishlisted);
-    if(wishlisted[0])
-        createElementsFromArray(wishlisted,wishlistSection,'My Wishlist >');
+    if (wishlisted[0]) // Check if there are items in the array
+        createElementsFromArray(wishlisted, wishlistSection, 'My Wishlist >');
 }
 
-var video = document.getElementById("advertisement-video");
-
+// Ensure script runs after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to play the video ad
+    var video = document.getElementById("advertisement-video");
     function playVideo() {
         video.play();
-        video.muted = false;
-        video.volume = 0.5;
     }
 
-video.addEventListener('click',playVideo);
-
-renderRecentViewed();
-renderMyWishlist();
+    renderRecentViewed();
+    renderMyWishlist();
+});

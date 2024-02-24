@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.html">
                 <img src="images/logo.png" alt="Logo" width="90" height="30" class="d-inline-block align-top brand-logo">
             </a>
             <!-- Navbar links -->
@@ -38,27 +38,13 @@
             <div class="collapse navbar-collapse" id="navbar-div-collapsible">
                 <!-- Search Form -->
                 <ul class="navbar-nav nav" id="search-form">
-                    <li>
-                        <div class="input-group" id="search-form">
-                            <select class="search-filter " aria-label="Select search category" id="filter">
-                                <option value="all" selected>All</option>
-                                <option value="movie">Movies</option>
-                                <option value="series">Web Series</option>
-                            </select>
-                            <input class="form-control" type="text" placeholder="Search anything..." id="search-input">
-                            <div id="search-list">
-                                <!-- List of each search item -->
-                                
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    <!-- Placeholder for search form fields -->
                 </ul>
-                <!-- Watchlist Link -->
+                <!-- Home Link -->
                 <ul class="navbar-nav nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html" id="home" >
-                            <!-- Watchlist icon -->
+                            <!-- Home icon -->
                             <i class="fas fa-home me-1 fa-lg"></i> Home
                         </a>
                     </li>
@@ -67,12 +53,15 @@
         </div>
     </nav>
 
+    <!-- Main content -->
     <div id="website-body">
-       
+       <div id="wishlist-body">
+           <!-- Wishlist items will be dynamically added here -->
+       </div>
     </div>
 
-    
     <!-- External JavaScript -->
-    <script src="script.js"></script> 
+    <script src="wishlist.js"></script> <!-- Wishlist functionality -->
+    <script src="script.js"></script> <!-- Main script for page interactions -->
 </body>
 </html>
