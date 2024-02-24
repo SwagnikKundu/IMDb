@@ -276,7 +276,7 @@ function renderRecentViewed(){
 
 // Function to redirect to a details page in a new tab
 function redirectToDestinationPage(item) {
-    window.open('details-page.html', '_blank');
+    window.open('details-page.html');
 }
 
 function renderMyWishlist(){
