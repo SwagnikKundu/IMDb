@@ -140,7 +140,7 @@ async function handleWishlistClick(item) {
 
 
 async function fetchMovieDetails(imdbID) {
-    const url = `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`;
+    const url = `https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`;
     const response = await fetch(url);
     const movieDetails = await response.json();
     return movieDetails;
@@ -184,7 +184,7 @@ function search() {
         type = `&type=${selectedType}`;
     }
 
-    const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&page=1&s=${searchTerm}${type}`;
+    const apiUrl = `https://www.omdbapi.com/?apikey=${apiKey}&page=1&s=${searchTerm}${type}`;
 
     fetchData(apiUrl)
         .then(data => {
