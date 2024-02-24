@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8"> <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport -->
+    
+    <!-- Title -->
+    <title>RESMO - My Watchlist</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo.png" type="image/png">
+    
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="style.css"> <!-- Your custom styles -->
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f1c3b52d55.js" crossorigin="anonymous"></script> <!-- Font Awesome icons -->
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.png" alt="Logo" width="90" height="30" class="d-inline-block align-top brand-logo">
+            </a>
+            <!-- Navbar links -->
+            <ul class="navbar-nav nav m">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">My List</a>
+                </li>
+            </ul>
+            <!-- Collapsible Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbar-div-collapsible">
+                <!-- Search Form -->
+                <ul class="navbar-nav nav" id="search-form">
+                    <li>
+                        <div class="input-group" id="search-form">
+                            <select class="search-filter " aria-label="Select search category" id="filter">
+                                <option value="all" selected>All</option>
+                                <option value="movie">Movies</option>
+                                <option value="series">Web Series</option>
+                            </select>
+                            <input class="form-control" type="text" placeholder="Search anything..." id="search-input">
+                            <div id="search-list">
+                                <!-- List of each search item -->
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- Watchlist Link -->
+                <ul class="navbar-nav nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" id="home" >
+                            <!-- Watchlist icon -->
+                            <i class="fas fa-home me-1 fa-lg"></i> Home
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="website-body">
+       
+    </div>
+
+    
+    <!-- External JavaScript -->
+    <script src="script.js"></script> 
+</body>
+</html>
