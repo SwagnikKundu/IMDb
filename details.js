@@ -57,6 +57,12 @@ function displayCard(objDetails) {
         // Create span elements for genres
         const genreDiv = document.createElement('div');
         genreDiv.className = 'genres';
+
+        const captionSpan = document.createElement('span');
+        captionSpan.className = 'obj-rating';
+        captionSpan.textContent = 'Genres: ';
+        genreDiv.appendChild(captionSpan);
+
         const genres = objDetails.Genre.split(', ');
         genres.forEach(genre => {
             const genreSpan = document.createElement('span');

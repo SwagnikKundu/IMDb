@@ -251,7 +251,7 @@ function renderRecentViewed() {
         createElementsFromArray(recentlyViewed, recentSection, 'Recently Viewed >');
 }
 
-// Function to redirect to a details page in a new tab
+// Function to redirect to a details page 
 function redirectToDestinationPage(item) {
     window.location.href = `details-page.html?id=${item.imdbID}`;
 }

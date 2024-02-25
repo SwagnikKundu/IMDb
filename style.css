@@ -10,6 +10,29 @@ body {
     height: 4vh;
 }
 
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        background-color: #2e649a; /* Adjust as needed */
+        z-index: 1000;
+        padding: 1rem;
+        overflow-y: auto;
+        height: 100vh;
+        display: none;
+    }
+    .navbar-collapse.show {
+        display: block;
+    }
+
+    
+}
+
+
+
+
 /* Styling for the brand logo */
 .brand-logo {
     transform: scale(1.5);
@@ -359,4 +382,13 @@ body {
 /* Styles for delete icon hover */
 .delete-icon:hover {
     cursor: pointer;
+}
+
+
+.wishlist-heading{
+    color: #f1b80f;
+    font-family: cursive;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    padding: 1.2rem 1.85rem 0;
 }

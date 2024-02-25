@@ -48,6 +48,10 @@ function createWatchlist(wishlistArray, parentElement) {
             img.src = "images/img-not-found.jpg";
         }
 
+        img.addEventListener('click', function() {
+            redirectToDestinationPage(item);
+        });
+
         // Set title text content
         title.textContent = item.Title;
 
@@ -82,6 +86,12 @@ function createWatchlist(wishlistArray, parentElement) {
 document.addEventListener('DOMContentLoaded', function() {
     renderMyWishlistList();    
 });
+
+
+// Function to redirect to a details page 
+function redirectToDestinationPage(item) {
+    window.location.href = `details-page.html?id=${item.imdbID}`;
+}
 
 // Function to remove item from wishlist
 async function removeFromWishlist(item) {
